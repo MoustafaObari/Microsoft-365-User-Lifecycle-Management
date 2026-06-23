@@ -554,7 +554,7 @@ IT Support Specialist • PowerShell Automation • Microsoft 365 / Entra / Intu
 ---
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Profile%20Views-Portfolio%20Project-111827?style=flat-square" alt="Profile Views" />
+  <img src="https://komarev.com/ghpvc/?username=MoustafaObari&label=Profile%20Views&color=0078D4&style=flat-square" alt="Profile Views Counter"/>
 </p>
 
 <p align="center">
