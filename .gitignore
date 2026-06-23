@@ -1,0 +1,37 @@
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.bak
+~$*
+
+# Logs and generated run output
+logs/*
+!logs/.gitkeep
+
+reports/*
+!reports/.gitkeep
+
+# Large local demo videos
+# Keep the final compressed portfolio demo included, but ignore other local video exports.
+*.mp4
+!assets/Microsoft365 & Entra ID Demo Video.mp4
+*.mov
+*.avi
+*.mkv
+
+# Secrets and private keys
+*.key
+*.pem
+*.pfx
+*.p12
+*secret*
+*credential*
+*token*
+*apikey*
+*api-key*
+
+# Local PowerShell history/config
+ConsoleHost_history.txt

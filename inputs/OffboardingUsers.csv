@@ -1,0 +1,3 @@
+UserPrincipalName,DisplayName,BlockSignIn,RemoveLicenses,RemoveFromGroups,ResetPassword,NewPassword,Notes
+hal.jordan@MOsDemoLAB.onmicrosoft.com,Hal Jordan,Yes,Yes,Yes,No,,Immediate access revocation
+victor.stone@MOsDemoLAB.onmicrosoft.com,Victor Stone,Yes,Yes,Yes,No,,Immediate access revocation

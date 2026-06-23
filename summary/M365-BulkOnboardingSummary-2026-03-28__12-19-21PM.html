@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft 365 Bulk Onboarding Summary</title>
+    <style>
+        :root {
+            --bg-1: #f5f8fc;
+            --bg-2: #edf2f8;
+            --panel: rgba(255,255,255,0.97);
+            --card: rgba(255,255,255,0.985);
+            --text: #0f1f35;
+            --muted: #66768b;
+            --line: #dbe4ef;
+            --blue: #2563eb;
+            --info: #0f766e;
+            --warning: #b45309;
+            --warning-bg: rgba(245,158,11,0.10);
+            --neutral: #475569;
+            --neutral-bg: rgba(148,163,184,0.10);
+            --danger: #dc2626;
+            --danger-bg: rgba(239,68,68,0.09);
+            --success: #15803d;
+            --success-bg: rgba(22,163,74,0.08);
+            --info-bg: rgba(15,118,110,0.08);
+            --shadow: 0 24px 54px rgba(15,23,42,0.08);
+            --shadow-soft: 0 10px 26px rgba(15,23,42,0.05);
+            --radius-xl: 28px;
+            --radius-lg: 22px;
+            --radius-md: 18px;
+            --radius-sm: 14px;
+            --gap-xs: 8px;
+            --gap-sm: 10px;
+            --gap-md: 12px;
+            --pad-card: 14px;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+
+        body {
+            padding: 18px;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(37,99,235,0.05), transparent 22%),
+                radial-gradient(circle at top right, rgba(24,74,119,0.04), transparent 18%),
+                linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #184a77 0%, #2557c8 55%, #2f67ea 100%);
+            color: #ffffff;
+            border-radius: 30px;
+            padding: 26px 30px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: var(--gap-md);
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+            pointer-events: none;
+        }
+
+        .hero::before {
+            width: 136px;
+            height: 136px;
+            top: -16px;
+            right: -8px;
+        }
+
+        .hero::after {
+            width: 104px;
+            height: 104px;
+            top: 26px;
+            right: 62px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            margin: 0 0 6px;
+            font-size: 34px;
+            line-height: 1.12;
+            font-weight: 700;
+            letter-spacing: -0.45px;
+        }
+
+        .hero p {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.55;
+            color: rgba(255,255,255,0.94);
+            max-width: 980px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: var(--gap-xs);
+            margin-bottom: var(--gap-sm);
+            align-items: start;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid rgba(37,99,235,0.09);
+            border-left: 4px solid var(--blue);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+            padding: 14px 14px 12px;
+            min-height: 88px;
+        }
+
+        .stat-card.accent-success {
+            border-left-color: var(--success);
+            background: linear-gradient(180deg, var(--success-bg) 0%, rgba(255,255,255,0.98) 100%);
+        }
+
+        .stat-card.accent-danger {
+            border-left-color: var(--danger);
+            background: linear-gradient(180deg, var(--danger-bg) 0%, rgba(255,255,255,0.98) 100%);
+        }
+
+        .stat-card.accent-warning {
+            border-left-color: var(--warning);
+            background: linear-gradient(180deg, var(--warning-bg) 0%, rgba(255,255,255,0.98) 100%);
+        }
+
+        .stat-card.accent-info {
+            border-left-color: var(--info);
+            background: linear-gradient(180deg, var(--info-bg) 0%, rgba(255,255,255,0.98) 100%);
+        }
+
+        .stat-card.accent-neutral {
+            border-left-color: var(--neutral);
+            background: linear-gradient(180deg, var(--neutral-bg) 0%, rgba(255,255,255,0.98) 100%);
+        }
+
+        .stat-label {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.85px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+
+        .stat-value {
+            font-size: 15px;
+            line-height: 1.4;
+            font-weight: 700;
+            color: var(--text);
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.9fr) minmax(320px, 0.95fr);
+            gap: var(--gap-sm);
+            align-items: start;
+            margin-bottom: var(--gap-sm);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--gap-sm);
+            align-items: start;
+        }
+
+        .panel,
+        .wide-panel,
+        .sidebar-panel {
+            background: var(--panel);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(15,23,42,0.04);
+            padding: var(--pad-card);
+            height: auto;
+            min-height: 0;
+            align-self: start;
+        }
+
+        .sidebar-panel {
+            position: sticky;
+            top: 18px;
+        }
+
+        .panel h2,
+        .wide-panel h2,
+        .sidebar-panel h2 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            line-height: 1.3;
+            font-weight: 700;
+            color: #12233d;
+        }
+
+        .panel ul,
+        .sidebar-panel ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .panel li,
+        .sidebar-panel li {
+            margin-bottom: 10px;
+            line-height: 1.58;
+            color: #24364c;
+            font-size: 13px;
+        }
+
+        .panel strong,
+        .wide-panel strong,
+        .sidebar-panel strong {
+            color: #10243d;
+        }
+
+        .path-block {
+            margin-bottom: var(--gap-sm);
+        }
+
+        .path-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .path-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #12233d;
+        }
+
+        .path-value {
+            display: block;
+            color: #4e6278;
+            font-size: 12.1px;
+            line-height: 1.65;
+            font-family: "Cascadia Code", Consolas, "Courier New", monospace;
+            background: linear-gradient(180deg, rgba(37,99,235,0.045) 0%, rgba(255,255,255,0.9) 100%);
+            border: 1px solid rgba(37,99,235,0.08);
+            border-radius: 14px;
+            padding: 10px 12px;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            white-space: normal;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+        }
+
+        .user-sections-grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: var(--gap-sm);
+            grid-auto-flow: dense;
+            align-items: start;
+            margin-bottom: var(--gap-sm);
+        }
+
+        .user-section {
+            grid-column: span 3;
+            min-width: 0;
+            align-self: start;
+        }
+
+        .user-card-grid {
+            display: grid;
+            gap: 6px;
+        }
+
+        .user-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 10px 11px 9px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,251,255,0.96) 100%);
+        }
+
+        .user-card-header {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .user-card-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #12233d;
+            margin-bottom: 3px;
+        }
+
+        .user-card-upn {
+            font-size: 12.4px;
+            color: #5f7288;
+            word-break: break-word;
+        }
+
+        .user-card-line {
+            font-size: 12.8px;
+            line-height: 1.55;
+            color: #23364b;
+            margin-bottom: 4px;
+        }
+
+        .user-card-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 10.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            border: 1px solid transparent;
+        }
+
+        .badge-success { background: rgba(22,163,74,0.12); color: #166534; border-color: rgba(22,163,74,0.16); }
+        .badge-info    { background: rgba(15,118,110,0.12); color: #0f766e; border-color: rgba(15,118,110,0.16); }
+        .badge-neutral { background: rgba(148,163,184,0.14); color: #475569; border-color: rgba(100,116,139,0.18); }
+        .badge-warning { background: rgba(245,158,11,0.14); color: #b45309; border-color: rgba(245,158,11,0.16); }
+        .badge-danger  { background: rgba(239,68,68,0.12); color: #b91c1c; border-color: rgba(239,68,68,0.16); }
+
+        .empty-state {
+            color: #738296;
+            font-size: 13px;
+            line-height: 1.5;
+            padding: 2px 0 0;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            background: #ffffff;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 11.8px;
+            text-transform: uppercase;
+            letter-spacing: 0.55px;
+            color: #5e6f83;
+            background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fbfdff;
+        }
+
+        tbody td {
+            padding: 11px 12px;
+            font-size: 12.8px;
+            line-height: 1.5;
+            color: #23364b;
+            border-bottom: 1px solid #ecf1f7;
+            vertical-align: top;
+        }
+
+        tbody tr:hover {
+            background: #f5f9ff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-panel {
+            grid-column: 1 / -1;
+            margin-top: 0;
+        }
+
+        .footer {
+            text-align: center;
+            color: #8390a1;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 1280px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-panel {
+                position: static;
+            }
+        }
+
+        @media (max-width: 1080px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: var(--gap-xs);
+            }
+
+            .user-section,
+            .table-panel {
+                grid-column: 1 / -1;
+            }
+
+            .user-sections-grid {
+                gap: var(--gap-xs);
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 14px;
+            }
+
+            .hero {
+                padding: 20px 18px 16px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Microsoft 365 Bulk Onboarding Summary</h1>
+            <p>This run processed 3 user(s): 1 created, 0 updated, 2 already compliant.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card ">
+    <div class="stat-label">Run ID</div>
+    <div class="stat-value">ONBOARD-20260328-121921</div>
+</div>
+<div class="stat-card ">
+    <div class="stat-label">Tenant Domain</div>
+    <div class="stat-value">MOsDemoLAB.onmicrosoft.com</div>
+</div>
+<div class="stat-card ">
+    <div class="stat-label">CSV Rows Processed</div>
+    <div class="stat-value">3</div>
+</div>
+<div class="stat-card accent-success">
+    <div class="stat-label">Created</div>
+    <div class="stat-value">1</div>
+</div>
+<div class="stat-card accent-info">
+    <div class="stat-label">Updated</div>
+    <div class="stat-value">0</div>
+</div>
+<div class="stat-card accent-neutral">
+    <div class="stat-label">Already Compliant</div>
+    <div class="stat-value">2</div>
+</div>
+<div class="stat-card accent-warning">
+    <div class="stat-label">Warnings</div>
+    <div class="stat-value">0</div>
+</div>
+<div class="stat-card accent-danger">
+    <div class="stat-label">Failed</div>
+    <div class="stat-value">0</div>
+</div>
+<div class="stat-card ">
+    <div class="stat-label">Archive Files Removed</div>
+    <div class="stat-value">0</div>
+</div>
+<div class="stat-card ">
+    <div class="stat-label">Run Duration (Seconds)</div>
+    <div class="stat-value">5.41</div>
+</div>
+        </div>
+
+        <div class="dashboard-layout">
+            <div>
+                <div class="overview-grid">
+                    <div class="panel">
+                        <h2>Run Settings</h2>
+                        <ul>
+                            <li>CSV Path: C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\inputs\NewUsers.csv</li>
+<li>Tenant Domain: MOsDemoLAB.onmicrosoft.com</li>
+<li>Archive Retention Count: 7</li>
+<li>Generated: 2026-03-28 12:19:26 PM</li>
+                        </ul>
+                    </div>
+
+                    <div class="panel">
+                        <h2>Status Breakdown</h2>
+                        <ul>
+                            <li><strong>Created:</strong> 1</li>
+<li><strong>Skipped - Already Compliant:</strong> 2</li>
+                        </ul>
+                    </div>
+
+                    <div class="panel">
+                        <h2>Status Definitions</h2>
+                        <ul>
+                            <li>Created: A new Microsoft 365 user was created from the CSV row.</li>
+<li>Updated: An existing user was reconciled and at least one requested value changed.</li>
+<li>Already Compliant: The user already matched the requested onboarding state, so no action was needed.</li>
+<li>Failed: The row could not be completed because of a validation or processing error.</li>
+                        </ul>
+                    </div>
+
+                    <div class="panel">
+                        <h2>Run Metadata</h2>
+                        <ul>
+                            <li>Run ID: ONBOARD-20260328-121921</li>
+<li>Rows recorded in result CSV: 3</li>
+<li>Warnings generated: 0</li>
+<li>Retention policy keeps latest 7 archive file(s) per artifact type.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-panel">
+                <h2>Output Files</h2>
+                <div class="path-block">
+    <div class="path-label">Timestamped Result CSV</div>
+    <div class="path-value">C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\reports\M365-BulkOnboarding-2026-03-28__12-19-21PM.csv</div>
+</div>
+<div class="path-block">
+    <div class="path-label">Timestamped Log</div>
+    <div class="path-value">C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\logs\M365-BulkOnboarding-2026-03-28__12-19-21PM.log</div>
+</div>
+<div class="path-block">
+    <div class="path-label">Latest Result CSV</div>
+    <div class="path-value">C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\reports\M365-BulkOnboarding-Latest.csv</div>
+</div>
+<div class="path-block">
+    <div class="path-label">Latest Log</div>
+    <div class="path-value">C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\logs\M365-BulkOnboarding-Latest.log</div>
+</div>
+<div class="path-block">
+    <div class="path-label">Timestamped HTML Summary</div>
+    <div class="path-value">C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\summary\M365-BulkOnboardingSummary-2026-03-28__12-19-21PM.html</div>
+</div>
+<div class="path-block">
+    <div class="path-label">Latest HTML Summary</div>
+    <div class="path-value">C:\Users\Mo\OneDrive\Desktop\Microsoft 365 Admin Center\summary\M365-BulkOnboardingSummary-Latest.html</div>
+</div>
+            </div>
+        </div>
+
+        <div class="user-sections-grid">
+            <div class="wide-panel user-section">
+    <h2>Created Users</h2>
+    <div class="user-card-grid">
+        <div class="user-card">
+    <div class="user-card-header">
+        <div>
+            <div class="user-card-name">Victor Stone</div>
+            <div class="user-card-upn">victor.stone@MOsDemoLAB.onmicrosoft.com</div>
+        </div>
+        <span class="badge badge-success">Created</span>
+    </div>
+    <div class="user-card-line"><strong>Department:</strong> IT</div>
+    <div class="user-card-line"><strong>Job Title:</strong> Cloud Support Analyst</div>
+    <div class="user-card-line"><strong>Group:</strong> SG_IT_Users</div>
+    <div class="user-card-line"><strong>License:</strong> SPB</div>
+    <div class="user-card-line"><strong>Notes:</strong> User created successfully; License assigned; Group assigned</div>
+</div>
+    </div>
+</div>
+            <div class="wide-panel user-section">
+    <h2>Updated Users</h2>
+    <div class="user-card-grid">
+        <div class="empty-state">No users were recorded in this section for this run.</div>
+    </div>
+</div>
+            <div class="wide-panel user-section">
+    <h2>Already Compliant Users</h2>
+    <div class="user-card-grid">
+        <div class="user-card">
+    <div class="user-card-header">
+        <div>
+            <div class="user-card-name">Diana Prince</div>
+            <div class="user-card-upn">diana.prince@MOsDemoLAB.onmicrosoft.com</div>
+        </div>
+        <span class="badge badge-neutral">Skipped - Already Compliant</span>
+    </div>
+    <div class="user-card-line"><strong>Department:</strong> HR</div>
+    <div class="user-card-line"><strong>Job Title:</strong> HR Specialist</div>
+    <div class="user-card-line"><strong>Group:</strong> SG_HR_Users</div>
+    <div class="user-card-line"><strong>License:</strong> SPB</div>
+    <div class="user-card-line"><strong>Notes:</strong> No action needed</div>
+</div>
+<div class="user-card">
+    <div class="user-card-header">
+        <div>
+            <div class="user-card-name">Hal Jordan</div>
+            <div class="user-card-upn">hal.jordan@MOsDemoLAB.onmicrosoft.com</div>
+        </div>
+        <span class="badge badge-neutral">Skipped - Already Compliant</span>
+    </div>
+    <div class="user-card-line"><strong>Department:</strong> Sales</div>
+    <div class="user-card-line"><strong>Job Title:</strong> Sales Associate</div>
+    <div class="user-card-line"><strong>Group:</strong> SG_Sales_Users</div>
+    <div class="user-card-line"><strong>License:</strong> SPB</div>
+    <div class="user-card-line"><strong>Notes:</strong> No action needed</div>
+</div>
+    </div>
+</div>
+            <div class="wide-panel user-section">
+    <h2>Failed Users</h2>
+    <div class="user-card-grid">
+        <div class="empty-state">No users were recorded in this section for this run.</div>
+    </div>
+</div>
+
+            <div class="wide-panel table-panel">
+                <h2>Processed Users</h2>
+                <div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Display Name</th>
+                <th>UserPrincipalName</th>
+                <th>Status</th>
+                <th>Department</th>
+                <th>Job Title</th>
+                <th>Group</th>
+                <th>License</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+    <td>Diana Prince</td>
+    <td>diana.prince@MOsDemoLAB.onmicrosoft.com</td>
+    <td>Skipped - Already Compliant</td>
+    <td>HR</td>
+    <td>HR Specialist</td>
+    <td>SG_HR_Users</td>
+    <td>SPB</td>
+    <td>No action needed</td>
+</tr>
+<tr>
+    <td>Victor Stone</td>
+    <td>victor.stone@MOsDemoLAB.onmicrosoft.com</td>
+    <td>Created</td>
+    <td>IT</td>
+    <td>Cloud Support Analyst</td>
+    <td>SG_IT_Users</td>
+    <td>SPB</td>
+    <td>User created successfully; License assigned; Group assigned</td>
+</tr>
+<tr>
+    <td>Hal Jordan</td>
+    <td>hal.jordan@MOsDemoLAB.onmicrosoft.com</td>
+    <td>Skipped - Already Compliant</td>
+    <td>Sales</td>
+    <td>Sales Associate</td>
+    <td>SG_Sales_Users</td>
+    <td>SPB</td>
+    <td>No action needed</td>
+</tr>
+        </tbody>
+    </table>
+</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Generated by Onboarding-New-M365Users.ps1
+        </div>
+    </div>
+</body>
+</html>

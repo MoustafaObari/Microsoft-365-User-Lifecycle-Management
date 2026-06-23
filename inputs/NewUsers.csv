@@ -1,0 +1,4 @@
+FirstName,LastName,DisplayName,UserName,Department,JobTitle,OfficeLocation,City,State,Country,UsageLocation,MobilePhone,BusinessPhone,LicenseSku,GroupName,Password
+Diana,Prince,Diana Prince,diana.prince,HR,HR Specialist,Toronto,Toronto,Ontario,Canada,CA,111-333-4444,111-333-5555,SPB,SG_HR_Users,Thursday123!
+Victor,Stone,Victor Stone,victor.stone,IT,Cloud Support Analyst,Toronto,Toronto,Ontario,Canada,CA,111-444-5555,111-444-6666,SPB,SG_IT_Users,Thursday123!
+Hal,Jordan,Hal Jordan,hal.jordan,Sales,Sales Associate,Toronto,Toronto,Ontario,Canada,CA,111-555-6666,111-555-7777,SPB,SG_Sales_Users,Thursday123!

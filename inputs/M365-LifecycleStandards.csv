@@ -1,0 +1,6 @@
+Department,RequiredGroups,RequiredLicenses,ForbiddenGroups,ForbiddenLicenses,ExpectedUsageLocation,ExpectedAccountEnabled,Notes
+HR,SG_HR_Users,SPB,,,CA,True,HR enabled user baseline
+IT,SG_IT_Users,SPB,,,CA,True,IT enabled user baseline
+Sales,SG_Sales_Users,SPB,,,CA,True,Sales enabled user baseline
+Terminated,,,SG_HR_Users|SG_IT_Users|SG_Sales_Users,SPB,CA,False,Disabled user baseline
+DEFAULT,,,,,,True,Default fallback standard
